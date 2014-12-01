@@ -41,8 +41,11 @@ gulp.task('watch', function () {
    gulp.watch('./source/html/*.html', ['inline', 'premailer']);
 });
 
+gulp.task('build', function () {
+  gulp.start('sass', 'inline', 'premailer');
+});
+
 // BUILD TASK
-gulp.task('build', ['sass', 'inline', 'premailer']);
 gulp.task('dev', ['sass', 'inline', 'premailer', 'watch']);
 
 
