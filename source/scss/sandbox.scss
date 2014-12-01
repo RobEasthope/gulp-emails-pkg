@@ -1,0 +1,150 @@
+body, table.body, h1, h2, h3, h4, h5, h6, p, td {
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  &:hover, &:active {
+    color: #ffffff !important;
+  }
+  &:visited {
+    color: #ffffff!important;
+  }
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #ffffff;
+}
+
+h1 a:active, h2 a:active, h3 a:active, h4 a:active, h5 a:active, h6 a:active, h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+  color: #ffffff !important;
+}
+
+.boxlink {
+  border: 2px solid #FFFFFF; 
+  padding: 8px; 
+  width: 200px;
+  margin: 0 auto;
+}
+
+.footertext {
+  font-size: 12px;
+  color: #b1b3b6;
+}
+
+td {
+  vertical-align: top;
+  padding: 0px;
+}
+
+td.wrapper {
+  padding: 0;
+}
+
+table {
+  &.columns td, &.column td {
+    padding: 0;
+  }
+} 
+
+center {
+  width: 100%;
+  min-width: 600px;
+}
+
+table {
+  &.twelve {
+    width: 600px;
+  }
+  &.container {
+    width: 600px;
+    margin: 0 auto;
+    text-align: inherit;
+  }
+  &.six {
+    width: 300px;
+  }
+  &.six center {
+    min-width: 300px;
+  }
+  &.six .panel center {
+    min-width: 300px;
+  }
+}   
+
+.block-grid {
+  width: 100%;
+  max-width: 600px;
+}  
+
+.pink-color {
+  background: #d70259;
+}
+
+.orange-color {
+  background-color: #fdbb2f;
+}
+
+.blue-color {
+  background-color: #2face6;
+}
+
+.green-color {
+  background-color: #9ccb3d;
+}
+
+img {
+  float: none;
+  padding: 0;
+}
+
+table.columns .text-pad {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table.columns .left-text-pad {
+  padding-left: 10px;
+}
+
+table.columns .right-text-pad {
+  padding-right: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+
+  table[class="body"] .right-text-pad {
+    padding-left: 10px !important;
+  }
+
+  table[class="body"] .left-text-pad {
+    padding-right: 10px !important;
+  }
+
+  table[class="body"] {
+    .container {
+      width: 100% !important;
+    }
+
+    .columns, .column {
+      display: inline-block !important;
+    }
+    
+    table {
+      &.columns td, &.column td {
+        width: 0px !important;
+      }
+    } 
+
+    table {
+      &.columns td.icons, &.column td.icons {
+        width: 150px !important;
+        padding-bottom: 6px !important;
+      }
+    } 
+  }  
+}
+

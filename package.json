@@ -1,0 +1,23 @@
+{
+  "name": "rwd-emails",
+  "version": "0.2.0",
+  "description": "Responsive email prototyping for Haygarth",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@codebasehq.com:haygarth/internal/rwd-emails.git"
+  },
+  "author": "Rob Easthope",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "gulp": "~3.8.10",
+    "gulp-load-plugins": "*",
+    "gulp-inline": "*",
+    "gulp-minify-css": "*",
+    "gulp-sass": "*",
+    "gulp-premailer": "*"
+  }
+}
