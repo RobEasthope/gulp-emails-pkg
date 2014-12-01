@@ -1,0 +1,6 @@
+{
+	"mailchimp-api": "###",
+
+	"dev-image-path": "./source/images",
+	"build-image-path": "###"
+}
