@@ -6,7 +6,7 @@ var gulpLoadPlugins = require('gulp-load-plugins');
 var plugins = gulpLoadPlugins();
 
 // Load config file
-// var config = require('./config.json');
+var config = require('./config.json');
 
 // CSS COMPILE
 gulp.task('sass', function () {
