@@ -44,18 +44,20 @@ gulp.task('dev-build', function () {
     .pipe(plugins.premailer())
     .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEVPATH))
     .pipe(gulp.dest('./build/'))
-    .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
-    .pipe(browserSync.reload({stream:true}))
+    
     .pipe(plugins.notify("Development build complete"));
 });
 
 // Development watch task
 gulp.task('dev', ['dev-build', 'browser-sync'], function() {
     // Watch SCSS
-    gulp.watch('./source/scss/*.scss', ['dev-build']);
-
+    gulp.watch('./source/scss/*.scss', ['dev-build'])
+    .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
+    .pipe(browserSync.reload({stream:true}));
     // Watch HTML
-    gulp.watch('./source/html/*.html', ['dev-build']);
+    gulp.watch('./source/html/*.html', ['dev-build'])
+    .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
+    .pipe(browserSync.reload({stream:true}));
 });
 
 
@@ -78,7 +80,5 @@ gulp.task('deploy', function () {
     .pipe(plugins.premailer())
     .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEPLOYPATH))
     .pipe(gulp.dest('./build/'))
-    .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
-    .pipe(browserSync.reload({stream:true}))
     .pipe(plugins.notify("Deployment build complete"));
 });
