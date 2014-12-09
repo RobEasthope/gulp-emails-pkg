@@ -41,7 +41,7 @@ gulp.task('html-build', function () {
       css: plugins.minifyCss()
     }))
     .pipe(plugins.premailer())
-    .pipe(plugins.replace('{TEST}', 'SUCCESSFUL FULL BUILD TEST'))
+    .pipe(plugins.replace('{TEST}', config.DEVPATH))
     .pipe(gulp.dest('./build/'));
 });
 

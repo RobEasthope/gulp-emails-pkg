@@ -1,6 +1,4 @@
 {
-	"mailchimp-api": "###",
-
 	"DEVPATH": "./source/images",
-	"build-image-path": "###"
+	"DEPLOYPATH": "###"
 }
