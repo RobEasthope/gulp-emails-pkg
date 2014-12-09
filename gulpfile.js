@@ -42,15 +42,15 @@ gulp.task('html-build', function () {
     }))
     .pipe(plugins.premailer())
     .pipe(plugins.replace('{TEST}', 'SUCCESSFUL FULL BUILD TEST'))
-    .pipe(gulp.dest('./build/'))
+    .pipe(gulp.dest('./build/'));
 });
 
 
 // WATCH TASK
 gulp.task('dev', ['browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
-    gulp.watch('./source/scss/*.scss', ['sass', 'html-build']);
-    gulp.watch('./source/html/*.html', ['html-build']);
+    gulp.watch('./source/scss/*.scss', ['sass', 'html-build'])
+    gulp.watch('./source/html/*.html', ['html-build'])
     .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
     .pipe(browserSync.reload({stream:true}));
 });
