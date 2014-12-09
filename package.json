@@ -20,6 +20,7 @@
     "gulp-premailer": "*",
     "gulp-sass": "*",
     "browser-sync": "*",
-    "gulp-filter": "*"
+    "gulp-filter": "*",
+    "gulp-replace": "*"
   }
 }

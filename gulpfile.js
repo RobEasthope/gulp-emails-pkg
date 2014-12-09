@@ -38,6 +38,13 @@ gulp.task('premailer', function () {
 });
 
 
+gulp.task('path-replacement', function(){
+  gulp.src(['./source/html/index.html'])
+    .pipe(plugins.replace('{TEST}', 'SUCCESSFUL TEST MK2'))
+    .pipe(gulp.dest('./build'));
+});
+
+
 // BROWSER-SYNC
 gulp.task('browser-sync', function () {
    var files = [
