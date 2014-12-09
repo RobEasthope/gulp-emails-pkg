@@ -33,8 +33,9 @@ gulp.task('sass', function () {
 });
 
 
-// HTML BUILD TASK
-gulp.task('html-build', function () {
+// HTML BUILD TASKS
+// Build email with local development paths (See config file for )
+gulp.task('dev-build', function () {
   gulp.src('./source/html/index.html')
     .pipe(plugins.inline({
       base: './',
@@ -45,12 +46,25 @@ gulp.task('html-build', function () {
     .pipe(gulp.dest('./build/'));
 });
 
+// Build email with deployment paths
+gulp.task('deploy', function () {
+  gulp.src('./source/html/index.html')
+    .pipe(plugins.inline({
+      base: './',
+      css: plugins.minifyCss()
+    }))
+    .pipe(plugins.premailer())
+    .pipe(plugins.replace('{TEST}', config.DEPLOYPATH))
+    .pipe(gulp.dest('./build/'));
+});
+
 
 // WATCH TASK
+// Development watch task
 gulp.task('dev', ['browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
-    gulp.watch('./source/scss/*.scss', ['sass', 'html-build'])
-    gulp.watch('./source/html/*.html', ['html-build'])
+    gulp.watch('./source/scss/*.scss', ['sass', 'dev-build'])
+    gulp.watch('./source/html/*.html', ['dev-build'])
     .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
     .pipe(browserSync.reload({stream:true}));
 });
