@@ -13,11 +13,12 @@
   "author": "Rob Easthope",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "gulp": "~3.8.10",
-    "gulp-load-plugins": "*",
+    "gulp": "^3.8.10",
     "gulp-inline": "*",
+    "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
+    "gulp-premailer": "*",
     "gulp-sass": "*",
-    "gulp-premailer": "*"
+    "browser-sync": "*"
   }
 }
