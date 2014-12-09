@@ -19,6 +19,7 @@
     "gulp-minify-css": "*",
     "gulp-premailer": "*",
     "gulp-sass": "*",
-    "browser-sync": "*"
+    "browser-sync": "*",
+    "gulp-filter": "*"
   }
 }
