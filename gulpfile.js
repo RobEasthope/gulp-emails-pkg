@@ -1,15 +1,16 @@
-// CONFIG
+// CONFIGERATION
 // Dependencies
 var gulp = require('gulp');
 
-// Load config file
-var config = require('./config.json');
-
-// Skip loading each dependency individually and load via gulp-load-plugins task
-var gulpLoadPlugins = require('gulp-load-plugins');
+// Load browser-sync individually
 var browserSync = require('browser-sync');
+
+// Skip loading the rest of the dependencies individually and load via gulp-load-plugins task
+var gulpLoadPlugins = require('gulp-load-plugins');
 var plugins = gulpLoadPlugins();
 
+// Load config file
+var config = require('./config.json');
 
 // Browser-sync settings
 gulp.task('browser-sync', function () {
@@ -24,9 +25,9 @@ gulp.task('browser-sync', function () {
    });
 });
 
+*   
 
-
-// DEVELOPMENT TASK
+// DEVELOPMENT TASKS
 // Build email with local development paths (See config file for )
 gulp.task('dev-build', function () {
 
@@ -56,7 +57,7 @@ gulp.task('dev', ['dev-build', 'browser-sync'], function() {
     .pipe(browserSync.reload({stream:true}));
 });
 
-
+*
 
 // DEPLOYMENT TASKS
 // Build email with deployment paths
