@@ -61,5 +61,5 @@ gulp.task('dev', ['sass', 'inline', 'premailer', 'browser-sync'], function() {
 
 // BUILD TASK
 gulp.task('default', function () {
-  gulp.start('sass', 'inline', 'premailer', 'browser-sync');
+  gulp.start('sass', 'inline', 'premailer');
 });
