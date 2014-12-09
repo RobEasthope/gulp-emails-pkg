@@ -62,7 +62,7 @@ gulp.task('deploy', function () {
 });
 
 
-// WATCH TASK
+// WATCH TASKS
 // Development watch task
 gulp.task('dev', ['sass', 'dev-build', 'browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
