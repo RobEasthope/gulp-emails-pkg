@@ -29,7 +29,8 @@ gulp.task('browser-sync', function () {
 gulp.task('sass', function () {
     gulp.src('./source/scss/_css-compile/*.scss')
         .pipe(plugins.sass())
-        .pipe(gulp.dest('./source/css/'));
+        .pipe(gulp.dest('./source/css/'))
+        .pipe(plugins.notify("CSS compiled"));
 });
 
 
@@ -43,7 +44,8 @@ gulp.task('dev-build', function () {
     }))
     .pipe(plugins.premailer())
     .pipe(plugins.replace('{TEST}', config.DEVPATH))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./build/'))
+    .pipe(plugins.notify("Development build complete"));
 });
 
 // Build email with deployment paths
@@ -55,7 +57,8 @@ gulp.task('deploy', function () {
     }))
     .pipe(plugins.premailer())
     .pipe(plugins.replace('{TEST}', config.DEPLOYPATH))
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./build/'))
+    .pipe(plugins.notify("Deployment build complete"));
 });
 
 
