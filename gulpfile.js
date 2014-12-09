@@ -25,6 +25,7 @@ gulp.task('browser-sync', function () {
 });
 
 
+
 // DEVELOPMENT TASK
 // Build email with local development paths (See config file for )
 gulp.task('dev-build', function () {
@@ -54,6 +55,7 @@ gulp.task('dev', ['dev-build', 'browser-sync'], function() {
     .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
     .pipe(browserSync.reload({stream:true}));
 });
+
 
 
 // DEPLOYMENT TASKS
