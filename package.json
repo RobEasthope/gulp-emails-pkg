@@ -21,6 +21,7 @@
     "gulp-sass": "*",
     "browser-sync": "*",
     "gulp-filter": "*",
-    "gulp-replace": "*"
+    "gulp-replace": "*",
+    "gulp-notify": "*"
   }
 }
