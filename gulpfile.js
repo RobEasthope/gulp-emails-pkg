@@ -37,7 +37,7 @@ gulp.task('premailer', function () {
         .pipe(browserSync.reload({stream:true}));
 });
 
-
+// PATH REPLACEMENT
 gulp.task('path-replacement', function(){
   gulp.src(['./source/html/index.html'])
     .pipe(plugins.replace('{TEST}', 'SUCCESSFUL TEST MK2'))
