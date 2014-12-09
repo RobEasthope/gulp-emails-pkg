@@ -17,31 +17,18 @@ gulp.task('sass', function () {
 });
 
 
-// INLINE CSS (Two step process)
-// 1. GULP INLINE - Copies external css to doc head
-gulp.task('inline', function () {
-	gulp.src('./source/html/index.html')
-	  .pipe(plugins.inline({
-	    base: './',
-	    css: plugins.minifyCss()
-	  }))
-	  .pipe(gulp.dest('./source/gulp/'))
-});
-
-// 2. GULP PREMAILER - Inlines at a tag level
-gulp.task('premailer', function () {
-    gulp.src('./source/gulp/*.html')
-        .pipe(plugins.premailer())
-        .pipe(gulp.dest('./build/'))
-        .pipe(plugins.filter('./build/*.html')) // Filtering stream to only css files
-        .pipe(browserSync.reload({stream:true}));
-});
-
-// PATH REPLACEMENT
-gulp.task('path-replacement', function(){
-  gulp.src(['./source/html/index.html'])
-    .pipe(plugins.replace('{TEST}', 'SUCCESSFUL TEST MK2'))
-    .pipe(gulp.dest('./build'));
+// HTML BUILD TASK
+gulp.task('build', ['sass', 'browser-sync'], function () {
+  gulp.src('./source/html/index.html')
+    .pipe(plugins.inline({
+      base: './',
+      css: plugins.minifyCss()
+    }))
+    .pipe(plugins.premailer())
+    .pipe(plugins.replace('{TEST}', 'SUCCESSFUL FULL BUILD TEST'))
+    .pipe(gulp.dest('./build/'))
+    .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
+    .pipe(browserSync.reload({stream:true}));
 });
 
 
@@ -64,9 +51,4 @@ gulp.task('dev', ['sass', 'inline', 'premailer', 'browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
     gulp.watch('./source/scss/*.scss', ['sass', 'inline', 'premailer']);
     gulp.watch('./source/html/*.html', ['inline', 'premailer']);
-});
-
-// BUILD TASK
-gulp.task('default', function () {
-  gulp.start('sass', 'inline', 'premailer');
 });
