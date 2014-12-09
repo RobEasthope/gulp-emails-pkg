@@ -20,7 +20,7 @@ gulp.task('sass', function () {
 // INLINE CSS (Two step process)
 // 1. GULP INLINE - Copies external css to doc head
 gulp.task('inline', function () {
-	gulp.src('./source/html/development.html')
+	gulp.src('./source/html/index.html')
 	  .pipe(plugins.inline({
 	    base: './',
 	    css: plugins.minifyCss()
@@ -32,7 +32,9 @@ gulp.task('inline', function () {
 gulp.task('premailer', function () {
     gulp.src('./source/gulp/*.html')
         .pipe(plugins.premailer())
-        .pipe(gulp.dest('./build/'));
+        .pipe(gulp.dest('./build/'))
+        .pipe(plugins.filter('./build/*.html')) // Filtering stream to only css files
+        .pipe(browserSync.reload({stream:true}));
 });
 
 
@@ -51,13 +53,13 @@ gulp.task('browser-sync', function () {
 
 
 // WATCH TASK
-gulp.task('dev', function() {
+gulp.task('dev', ['sass', 'inline', 'premailer', 'browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
     gulp.watch('./source/scss/*.scss', ['sass', 'inline', 'premailer']);
     gulp.watch('./source/html/*.html', ['inline', 'premailer']);
 });
 
 // BUILD TASK
-gulp.task('default', ['premailer', 'browser-sync'], function () {
-  gulp.start('sass', 'inline', 'premailer');
+gulp.task('default', function () {
+  gulp.start('sass', 'inline', 'premailer', 'browser-sync');
 });
