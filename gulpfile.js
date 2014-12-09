@@ -42,7 +42,7 @@ gulp.task('dev-build', function () {
       css: plugins.minifyCss()
     }))
     .pipe(plugins.premailer())
-    .pipe(plugins.replace('{TEST}', config.DEVPATH))
+    .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEVPATH))
     .pipe(gulp.dest('./build/'))
     .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
     .pipe(browserSync.reload({stream:true}))
@@ -76,7 +76,7 @@ gulp.task('deploy', function () {
       css: plugins.minifyCss()
     }))
     .pipe(plugins.premailer())
-    .pipe(plugins.replace('{TEST}', config.DEPLOYPATH))
+    .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEPLOYPATH))
     .pipe(gulp.dest('./build/'))
     .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
     .pipe(browserSync.reload({stream:true}))
