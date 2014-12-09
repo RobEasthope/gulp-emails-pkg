@@ -64,7 +64,7 @@ gulp.task('deploy', function () {
 
 // WATCH TASK
 // Development watch task
-gulp.task('dev', ['sass', 'html-build', 'browser-sync'], function() {
+gulp.task('dev', ['sass', 'dev-build', 'browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
     gulp.watch('./source/scss/*.scss', ['sass', 'dev-build'])
     gulp.watch('./source/html/*.html', ['dev-build'])
