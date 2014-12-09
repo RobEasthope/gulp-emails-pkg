@@ -18,7 +18,6 @@ gulp.task('sass', function () {
 
 // INLINE CSS (Two step process)
 // 1. GULP INLINE - Copies external css to doc head
-
 gulp.task('inline', function () {
 	gulp.src('./source/html/development.html')
 	  .pipe(plugins.inline({
@@ -36,17 +35,17 @@ gulp.task('premailer', function () {
 });
 
 // WATCH TASK
-gulp.task('watch', function () {
-   gulp.watch('./source/scss/*.scss', ['sass']);
-   gulp.watch('./source/html/*.html', ['inline', 'premailer']);
+gulp.task('dev', function() {
+    //a list of watchers, so it will watch all of the following files waiting for changes
+    gulp.watch('./source/scss/*.scss', ['sass', 'inline', 'premailer']);
+    gulp.watch('./source/html/*.html', ['inline', 'premailer']);
 });
 
-gulp.task('build', function () {
-  gulp.start('sass', 'inline', 'premailer');
-});
 
 // BUILD TASK
-gulp.task('dev', ['sass', 'inline', 'premailer', 'watch']);
+gulp.task('default', function () {
+  gulp.start('sass', 'inline', 'premailer');
+});
 
 
 // Email testing
