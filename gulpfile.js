@@ -47,7 +47,7 @@ gulp.task('html-build', function () {
 
 
 // WATCH TASK
-gulp.task('dev', ['browser-sync'], function() {
+gulp.task('dev', ['sass', 'html-build', 'browser-sync'], function() {
     //a list of watchers, so it will watch all of the following files waiting for changes
     gulp.watch('./source/scss/*.scss', ['sass', 'html-build'])
     gulp.watch('./source/html/*.html', ['html-build'])
