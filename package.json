@@ -23,6 +23,7 @@
     "gulp-notify": "*",
     "gulp-premailer": "*",
     "gulp-replace": "*",
+    "gulp-s3": "^0.3.0",
     "gulp-sass": "*"
   }
 }
