@@ -2,8 +2,9 @@
 // Dependencies
 var gulp = require('gulp');
 
-// Load browser-sync individually
+// Load browser-sync & gulp-del pkg individually
 var browserSync = require('browser-sync');
+var del = require('del');
 
 // Skip loading the rest of the dependencies individually and load via gulp-load-plugins task
 var gulpLoadPlugins = require('gulp-load-plugins');
@@ -27,9 +28,18 @@ gulp.task('browser-sync', function () {
 
 // *
 
+// CLEAN TASK
+gulp.task('clean', function (cb) {
+  del([
+    './build/**'
+  ], cb);
+});
+
+// *
+
 // DEVELOPMENT TASKS
 // Build email with local development paths (See config file for )
-gulp.task('dev-build', function () {
+gulp.task('dev-build', ['clean'], function () {
 
   // Compile css
   gulp.src('./source/scss/_css-compile/*.scss')
@@ -61,7 +71,7 @@ gulp.task('dev', ['dev-build', 'browser-sync'], function() {
 
 // DEPLOYMENT TASKS
 // Build email with deployment paths
-gulp.task('deploy', function () {
+gulp.task('deploy', ['clean'], function () {
 
   // Compile css
   gulp.src('./source/scss/_css-compile/*.scss')
