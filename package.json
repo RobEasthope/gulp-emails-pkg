@@ -13,15 +13,16 @@
   "author": "Rob Easthope",
   "license": "BSD-2-Clause",
   "devDependencies": {
+    "browser-sync": "*",
+    "del": "^1.1.0",
     "gulp": "^3.8.10",
+    "gulp-filter": "*",
     "gulp-inline": "*",
     "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
+    "gulp-notify": "*",
     "gulp-premailer": "*",
-    "gulp-sass": "*",
-    "browser-sync": "*",
-    "gulp-filter": "*",
     "gulp-replace": "*",
-    "gulp-notify": "*"
+    "gulp-sass": "*"
   }
 }
