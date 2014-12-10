@@ -10,8 +10,11 @@ var del = require('del');
 var gulpLoadPlugins = require('gulp-load-plugins');
 var plugins = gulpLoadPlugins();
 
-// Load config file
+// Load project config file
 var config = require('./config.json');
+
+// Load AWS S3 config file
+var config = require('./aws.json');
 
 // Browser-sync settings
 gulp.task('browser-sync', function () {
