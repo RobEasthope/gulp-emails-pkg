@@ -67,6 +67,12 @@ gulp.task('dev', ['dev-build', 'browser-sync'], function() {
     .pipe(browserSync.reload({stream:true}));
 });
 
+// Development watch task sans Browser-Sync
+gulp.task('watch', ['dev-build'], function() {
+    // Watch entire source directory for changes
+    gulp.watch('./source/*/*.*', ['dev-build']);
+});
+
 // *
 
 // DEPLOYMENT TASKS
