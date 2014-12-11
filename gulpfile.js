@@ -2,10 +2,9 @@
 // Dependencies
 var gulp = require('gulp');
 
-// Load browser-sync & gulp-del pkg individually
+// Load browser-sync, gulp-del, and fs pkgs individually
 var browserSync = require('browser-sync');
 var del = require('del');
-var s3 = require("gulp-s3");
 var fs = require("fs");
 
 // Skip loading the rest of the dependencies individually and load via gulp-load-plugins task
@@ -16,7 +15,6 @@ var plugins = gulpLoadPlugins();
 var config = require('./config.json');
 
 // Load AWS S3 config file
-// var aws = require('./aws.json');
 aws = JSON.parse(fs.readFileSync('./aws.json'));
 
 // Browser-sync settings
@@ -32,22 +30,15 @@ gulp.task('browser-sync', function () {
    });
 });
 
+
 // *
+
 
 // CLEAN TASK
 gulp.task('clean', function (cb) {
   del([
     './build/**'
   ], cb);
-});
-
-// *
-
-
-// Development watch task sans Browser-Sync
-gulp.task('aws', function() {
-    gulp.src('./source/images/**')
-        .pipe(s3(aws));
 });
 
 // DEVELOPMENT TASKS
@@ -86,7 +77,9 @@ gulp.task('watch', ['dev-build'], function() {
     gulp.watch('./source/*/*.*', ['dev-build']);
 });
 
+
 // *
+
 
 // DEPLOYMENT TASKS
 // Build email with deployment paths
@@ -107,4 +100,10 @@ gulp.task('deploy', ['clean'], function () {
     .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEPLOYPATH))
     .pipe(gulp.dest('./build/'))
     .pipe(plugins.notify("Deployment build complete"));
+});
+
+// Push images to AWS S3
+gulp.task('aws-push', function() {
+    gulp.src('./source/images/**')
+        .pipe(plugins.s3(aws));
 });
