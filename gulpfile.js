@@ -5,6 +5,8 @@ var gulp = require('gulp');
 // Load browser-sync & gulp-del pkg individually
 var browserSync = require('browser-sync');
 var del = require('del');
+var s3 = require("gulp-s3");
+var fs = require("fs");
 
 // Skip loading the rest of the dependencies individually and load via gulp-load-plugins task
 var gulpLoadPlugins = require('gulp-load-plugins');
@@ -14,7 +16,8 @@ var plugins = gulpLoadPlugins();
 var config = require('./config.json');
 
 // Load AWS S3 config file
-var config = require('./aws.json');
+// var aws = require('./aws.json');
+aws = JSON.parse(fs.readFileSync('./aws.json'));
 
 // Browser-sync settings
 gulp.task('browser-sync', function () {
@@ -39,6 +42,13 @@ gulp.task('clean', function (cb) {
 });
 
 // *
+
+
+// Development watch task sans Browser-Sync
+gulp.task('aws', function() {
+    gulp.src('./source/images/**')
+        .pipe(s3(aws));
+});
 
 // DEVELOPMENT TASKS
 // Build email with local development paths (See config file for )
