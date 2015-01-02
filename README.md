@@ -1,4 +1,4 @@
 gulp-emails-pkg
 ===============
 
-A collection of Gulp tasks to making email development *a lot* easier
+A collection of Gulp tasks for making HTML emails *a lot* easier
