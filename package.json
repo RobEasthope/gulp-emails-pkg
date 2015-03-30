@@ -15,7 +15,7 @@
   "devDependencies": {
     "browser-sync": "*",
     "del": "^1.1.0",
-    "gulp": "^3.8.10",
+    "gulp": "git://github.com/gulpjs/gulp.git#4.0",
     "gulp-filter": "*",
     "gulp-inline": "*",
     "gulp-load-plugins": "*",
