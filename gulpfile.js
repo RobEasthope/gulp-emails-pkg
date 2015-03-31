@@ -19,11 +19,11 @@ var fs = require("fs");
 // HTML
 gulp.task('html', function () {
   return gulp.src('./source/html/*.html')
-    .pipe(plugins.inline({
+    .pipe($.inline({
       base: './',
-      css: plugins.minifyCss()
+      css: $.minifyCss()
     }))
-    .pipe(plugins.premailer())
+    .pipe($.premailer())
     .pipe(gulp.dest('./build'))   
     .pipe($.notify("HTML processing complete"));
 });
