@@ -19,7 +19,12 @@ var fs = require("fs");
 // HTML
 gulp.task('html', function () {
   return gulp.src('./source/html/*.html')
-    .pipe(gulp.dest('./app'))   
+    .pipe(plugins.inline({
+      base: './',
+      css: plugins.minifyCss()
+    }))
+    .pipe(plugins.premailer())
+    .pipe(gulp.dest('./build'))   
     .pipe($.notify("HTML processing complete"));
 });
 
@@ -39,7 +44,7 @@ gulp.task('css', function () {
       require('autoprefixer-core')({browsers: ['last 2 version']})
     ]))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('./app/css'))
+    .pipe(gulp.dest('./build/css'))
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("CSS compile complete"));
 });
@@ -56,7 +61,7 @@ gulp.task('images', function () {
       // as hooks for embedding and styling
       svgoPlugins: [{cleanupIDs: false}]
     })))
-    .pipe(gulp.dest('app/images'))
+    .pipe(gulp.dest('build/images'))
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("Image processing complete"));
 });
