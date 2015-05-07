@@ -18,13 +18,14 @@ var fs = require("fs");
 
 // HTML
 gulp.task('html', function () {
-  return gulp.src('./source/html/*.html')
+  return gulp.src('./source/html/build.html')
     .pipe($.inline({
       base: './',
       css: $.minifyCss()
     }))
     .pipe($.premailer())
-    .pipe(gulp.dest('./build'))   
+    .pipe($.rename("index.html"))
+    .pipe(gulp.dest('./build'))
     .pipe($.notify("HTML processing complete"));
 });
 
