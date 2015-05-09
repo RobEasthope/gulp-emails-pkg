@@ -1,109 +1,136 @@
-// CONFIGERATION
-// Dependencies
-var gulp = require('gulp');
+/*global -$ */
+'use strict';
 
-// Load browser-sync, gulp-del, and fs pkgs individually
+// GULP CONFIG
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
-var del = require('del');
+var reload = browserSync.reload;
+var awspublish = require('gulp-awspublish');
 var fs = require("fs");
 
-// Skip loading the rest of the dependencies individually and load via gulp-load-plugins task
-var gulpLoadPlugins = require('gulp-load-plugins');
-var plugins = gulpLoadPlugins();
-
 // Load project config file
-var config = require('./config.json');
+// var appConfig = require('./gulp-config.json');
 
-// Load AWS S3 config file
-aws = JSON.parse(fs.readFileSync('./aws.json'));
 
-// Browser-sync settings
-gulp.task('browser-sync', function () {
-   var files = [
-      './build/*.html'
-   ];
+// *
 
-   browserSync.init(files, {
-      server: {
-         baseDir: './build'
-      }
-   });
+
+// HTML
+gulp.task('html', function () {
+  return gulp.src('./source/html/build.html')
+    .pipe($.premailer())
+    .pipe($.rename("index.html"))
+    .pipe(gulp.dest('./build'))   
+    .pipe($.notify("HTML processing complete"));
+});
+
+
+// CSS
+gulp.task('css', function () {
+  return gulp.src('source/scss/app.scss')
+    .pipe($.sourcemaps.init())
+    .pipe($.sass({
+      outputStyle: 'nested',
+      precision: 10,
+      includePaths: ['.'],
+      onError: console.error.bind(console, 'Sass error:')
+    }))
+    .pipe($.postcss([
+      require('autoprefixer-core')({browsers: ['last 2 version']})
+    ]))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('./build/css'))
+    .pipe(browserSync.reload({stream:true}))
+    .pipe($.notify("CSS compile complete"));
+});
+
+
+// Images
+gulp.task('images', function () {
+  return gulp.src('source/images/**/*')
+    .pipe($.cache($.imagemin({
+      progressive: true,
+      interlaced: true,
+      // don't remove IDs from SVGs, they are often used
+      // as hooks for embedding and styling
+      svgoPlugins: [{cleanupIDs: false}]
+    })))
+    .pipe(gulp.dest('build/images'))
+    .pipe(browserSync.reload({stream:true}))
+    .pipe($.notify("Image processing complete"));
 });
 
 
 // *
 
 
-// CLEAN TASK
-gulp.task('clean', function (cb) {
-  del([
-    './build/**'
-  ], cb);
+// BUILD TASKS
+// Clean task
+gulp.task('clean', require('del').bind(null, ['build']));
+
+
+// Build task
+gulp.task('build', gulp.series('css', 'html', 'images'), function () {
+  
 });
+
+
+// Clean & build
+gulp.task('default', function () {
+  gulp.start('clean');
+  gulp.start('build');
+});
+
+
+// *
+
 
 // DEVELOPMENT TASKS
-// Build email with local development paths (See config file for )
-gulp.task('dev-build', ['clean'], function () {
+// Browser-Sync task
+gulp.task('browser-sync', function () {
+  var files = [
+    './app/index.html'
+  ];
 
-  // Compile css
-  gulp.src('./source/scss/_css-compile/*.scss')
-      .pipe(plugins.sass())
-      .pipe(gulp.dest('./source/css/'));
-
-  // Inline css
-  gulp.src('./source/html/index.html')
-    .pipe(plugins.inline({
-      base: './',
-      css: plugins.minifyCss()
-    }))
-    .pipe(plugins.premailer())
-    .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEVPATH))
-    .pipe(gulp.dest('./build/'))
-    
-    .pipe(plugins.notify("Development build complete"));
+  browserSync.init(files, {
+    server: {
+       baseDir: './app'
+    }
+  });
 });
 
-// Development watch task
-gulp.task('dev', ['dev-build', 'browser-sync'], function() {
-    // Watch entire source directory for changes
-    gulp.watch('./source/*/*.*', ['dev-build'])
-    .pipe(plugins.filter('./build/*.html')) // Filtering stream to only html build files
-    .pipe(browserSync.reload({stream:true}));
+
+// Watch task
+gulp.task('watch', function() {
+  gulp.watch('source/html/**/*.*', gulp.parallel('html'));
+  gulp.watch('source/scss/**/*.*', gulp.parallel('css'));
+  gulp.watch('source/images/**/*.*', gulp.parallel('images'));
 });
 
-// Development watch task sans Browser-Sync
-gulp.task('watch', ['dev-build'], function() {
-    // Watch entire source directory for changes
-    gulp.watch('./source/*/*.*', ['dev-build']);
+
+// Localhost server & build
+gulp.task('dev', gulp.parallel('build', 'watch', 'browser-sync'), function () {
+  
 });
 
 
 // *
 
 
-// DEPLOYMENT TASKS
-// Build email with deployment paths
-gulp.task('deploy', ['clean'], function () {
-
-  // Compile css
-  gulp.src('./source/scss/_css-compile/*.scss')
-      .pipe(plugins.sass())
-      .pipe(gulp.dest('./source/css/'));
-
-  // Inline css
-  gulp.src('./source/html/index.html')
-    .pipe(plugins.inline({
-      base: './',
-      css: plugins.minifyCss()
-    }))
-    .pipe(plugins.premailer())
-    .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEPLOYPATH))
-    .pipe(gulp.dest('./build/'))
-    .pipe(plugins.notify("Deployment build complete"));
-});
-
-// Push images to AWS S3
-gulp.task('aws-push', function() {
-    gulp.src('./source/images/**')
-        .pipe(plugins.s3(aws));
+// PUBLISH TASKS
+// Publish the app to S3
+gulp.task('publish-app', function() {
+  // create a new publisher 
+  var publisher = awspublish.create({
+    "key": "AKIAIIKJNP62MPJVE2TQ",
+    "secret": "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",
+    "bucket": "thinkdifferently.digital",
+    "region": "eu-central-1"
+    });
+ 
+  return gulp.src('./app/**/*.*')
+    .pipe(publisher.publish())
+    .pipe(publisher.cache())
+    .pipe($.awspublish.reporter());
 });
