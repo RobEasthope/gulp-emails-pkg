@@ -67,7 +67,7 @@ gulp.task('images', function () {
 
 // BUILD TASKS
 // Clean task
-gulp.task('clean', require('del').bind(null, ['app']));
+gulp.task('clean', require('del').bind(null, ['build']));
 
 
 // Build task
