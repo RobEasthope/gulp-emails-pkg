@@ -19,6 +19,7 @@ var fs = require("fs");
 // HTML
 gulp.task('html', function () {
   return gulp.src('./source/html/build.html')
+    .pipe($.premailer())
     .pipe($.rename("index.html"))
     .pipe(gulp.dest('./build'))   
     .pipe($.notify("HTML processing complete"));
@@ -28,10 +29,9 @@ gulp.task('html', function () {
 // CSS
 gulp.task('css', function () {
   return gulp.src('source/scss/app.scss')
-    // .pipe($.watch('./source/scss/**/*.scss'))
     .pipe($.sourcemaps.init())
     .pipe($.sass({
-      outputStyle: 'nested', // libsass doesn't support expanded yet
+      outputStyle: 'nested',
       precision: 10,
       includePaths: ['.'],
       onError: console.error.bind(console, 'Sass error:')
@@ -44,7 +44,6 @@ gulp.task('css', function () {
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("CSS compile complete"));
 });
-
 
 
 // Images
@@ -72,7 +71,7 @@ gulp.task('clean', require('del').bind(null, ['app']));
 
 
 // Build task
-gulp.task('build', gulp.series('html', 'css', 'images'), function () {
+gulp.task('build', gulp.series('css', 'html', 'images'), function () {
   
 });
 
