@@ -4,12 +4,15 @@
 // GULP CONFIG
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var fs = require("fs");
+
+// Badly named tasks
 var awspublish = require('gulp-awspublish');
 var minifyHTML = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
-var fs = require("fs");
 
 // Load project config file
 // var appConfig = require('./gulp-config.json');
@@ -44,10 +47,12 @@ gulp.task('css', function () {
     ]))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('./build/css'))
+
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe($.rename("app.min.css"))
     .pipe(gulp.dest('./build/css'))
     .pipe(browserSync.reload({stream:true}))
+
     .pipe($.notify("CSS compile complete"));
 });
 
@@ -63,6 +68,7 @@ gulp.task('images', function () {
       svgoPlugins: [{cleanupIDs: false}]
     })))
     .pipe(gulp.dest('build/images'))
+
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("Image processing complete"));
 });
@@ -92,7 +98,7 @@ gulp.task('default', function () {
 // *
 
 
-// DEVELOPMENT TASKS
+// WATCH TASKS
 // Browser-Sync task
 gulp.task('browser-sync', function () {
   var files = [
