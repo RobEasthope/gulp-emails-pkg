@@ -19,6 +19,7 @@ var fs = require("fs");
 // HTML
 gulp.task('html', function () {
   return gulp.src('./source/html/build.html')
+    .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEVPATH))
     .pipe($.premailer())
     .pipe($.rename("index.html"))
     .pipe(gulp.dest('./build'))   
