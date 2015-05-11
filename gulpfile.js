@@ -126,7 +126,7 @@ gulp.task('dev', gulp.parallel('build', 'watch', 'browser-sync'), function () {
 
 // PUBLISH TASKS
 // Publish the app to S3
-gulp.task('publish-app', function() {
+gulp.task('publish-images', function() {
   // create a new publisher 
   var publisher = awspublish.create({
     "key": "",
@@ -135,7 +135,7 @@ gulp.task('publish-app', function() {
     "region": ""
     });
  
-  return gulp.src('./app/**/*.*')
+  return gulp.src('build/images/**/*.*')
     .pipe(publisher.publish())
     .pipe(publisher.cache())
     .pipe($.awspublish.reporter());
