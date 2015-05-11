@@ -10,7 +10,7 @@ var awspublish = require('gulp-awspublish');
 var fs = require("fs");
 
 // Load project config file
-var config = require('./config.json');
+// var config = require('./config.json');
 
 
 // *
@@ -18,9 +18,17 @@ var config = require('./config.json');
 
 // HTML
 gulp.task('html', function () {
-  return gulp.src('./source/html/build.html')
-    .pipe(plugins.replace('{{IMAGE-PATH}}', config.DEVPATH))
+  return gulp.src('source/html/build.html')
     .pipe($.premailer())
+    .pipe($.replace({
+          patterns: [
+            {
+              match: 'IMAGEPATH',
+              replacement: 'TEST'
+            }
+          ]
+        }))
+    // .pipe($.replace('{{IMAGE-PATH}}', config.DEVPATH))
     .pipe($.rename("index.html"))
     .pipe(gulp.dest('./build'))   
     .pipe($.notify("HTML processing complete"));
