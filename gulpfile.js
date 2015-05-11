@@ -8,6 +8,7 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var awspublish = require('gulp-awspublish');
 var minifyHTML = require('gulp-minify-html');
+var minifyCss = require('gulp-minify-css');
 var fs = require("fs");
 
 // Load project config file
@@ -42,6 +43,9 @@ gulp.task('css', function () {
       require('autoprefixer-core')({browsers: ['last 2 version']})
     ]))
     .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('./build/css'))
+    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe($.rename("app.min.css"))
     .pipe(gulp.dest('./build/css'))
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("CSS compile complete"));
