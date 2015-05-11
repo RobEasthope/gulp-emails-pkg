@@ -7,6 +7,7 @@ var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var awspublish = require('gulp-awspublish');
+var minifyHTML = require('gulp-minify-html');
 var fs = require("fs");
 
 // Load project config file
@@ -20,6 +21,7 @@ var fs = require("fs");
 gulp.task('html', function () {
   return gulp.src('./source/html/build.html')
     .pipe($.premailer())
+    .pipe(minifyHTML())
     .pipe($.rename("index.html"))
     .pipe(gulp.dest('./build'))   
     .pipe($.notify("HTML processing complete"));
