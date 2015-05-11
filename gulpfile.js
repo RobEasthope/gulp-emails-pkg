@@ -10,7 +10,7 @@ var awspublish = require('gulp-awspublish');
 var fs = require("fs");
 
 // Load project config file
-// var appConfig = require('./gulp-config.json');
+var config = require('./config.json');
 
 
 // *
