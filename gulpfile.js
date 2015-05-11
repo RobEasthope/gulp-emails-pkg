@@ -90,12 +90,12 @@ gulp.task('default', function () {
 // Browser-Sync task
 gulp.task('browser-sync', function () {
   var files = [
-    './app/index.html'
+    'build/index.html'
   ];
 
   browserSync.init(files, {
     server: {
-       baseDir: './app'
+       baseDir: './build'
     }
   });
 });
