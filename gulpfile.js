@@ -123,10 +123,10 @@ gulp.task('dev', gulp.parallel('build', 'watch', 'browser-sync'), function () {
 gulp.task('publish-app', function() {
   // create a new publisher 
   var publisher = awspublish.create({
-    "key": "AKIAIIKJNP62MPJVE2TQ",
-    "secret": "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",
-    "bucket": "thinkdifferently.digital",
-    "region": "eu-central-1"
+    "key": "",
+    "secret": "",
+    "bucket": "",
+    "region": ""
     });
  
   return gulp.src('./app/**/*.*')
