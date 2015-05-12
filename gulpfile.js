@@ -118,7 +118,7 @@ gulp.task('watch', function() {
 
 
 // Localhost server & build
-gulp.task('dev', gulp.series('build', 'watch', 'browser-sync'), function () {
+gulp.task('dev', gulp.series('build', 'browser-sync', 'watch'), function () {
   
 });
 
