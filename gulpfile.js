@@ -27,7 +27,8 @@ gulp.task('html', function () {
     .pipe($.premailer())
     .pipe(minifyHTML())
     .pipe($.rename("index.html"))
-    .pipe(gulp.dest('./build'))   
+    .pipe(gulp.dest('./build'))
+    .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("HTML processing complete"));
 });
 
