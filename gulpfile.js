@@ -82,18 +82,13 @@ gulp.task('images', function () {
 // Clean task
 gulp.task('clean', require('del').bind(null, ['build']));
 
-
 // Build task
 gulp.task('build', gulp.series('css', 'html', 'images'), function () {
   
 });
 
-
 // Clean & build
-gulp.task('default', function () {
-  gulp.start('clean');
-  gulp.start('build');
-});
+gulp.task('default', gulp.series('clean', 'build'), function () {});
 
 
 // *
