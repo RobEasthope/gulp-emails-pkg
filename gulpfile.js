@@ -61,15 +61,7 @@ gulp.task('css', function () {
 // Images
 gulp.task('images', function () {
   return gulp.src('source/images/**/*')
-    .pipe($.cache($.imagemin({
-      progressive: true,
-      interlaced: true,
-      // don't remove IDs from SVGs, they are often used
-      // as hooks for embedding and styling
-      svgoPlugins: [{cleanupIDs: false}]
-    })))
     .pipe(gulp.dest('build/images'))
-
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("Image processing complete"));
 });
