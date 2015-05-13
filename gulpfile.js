@@ -96,7 +96,7 @@ gulp.task('default', gulp.series('clean', 'build'), function () {});
 
 // WATCH TASKS
 // Browser-Sync task
-gulp.task('browser-sync', function () {
+gulp.task('browser-sync', function (done) {
   var files = [
     'build/index.html'
   ];
@@ -106,14 +106,16 @@ gulp.task('browser-sync', function () {
        baseDir: './build'
     }
   });
+
+  done()
 });
 
 
 // Watch task
 gulp.task('watch', function() {
-  gulp.watch('source/html/**/*.*', gulp.parallel('html'));
-  gulp.watch('source/scss/**/*.*', gulp.parallel('css'));
-  gulp.watch('source/images/**/*.*', gulp.parallel('images'));
+  gulp.watch('source/html/**/*.*', gulp.series('html'));
+  gulp.watch('source/scss/**/*.*', gulp.series('css'));
+  gulp.watch('source/images/**/*.*', gulp.series('images'));
 });
 
 
