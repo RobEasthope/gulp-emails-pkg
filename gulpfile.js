@@ -61,6 +61,11 @@ gulp.task('css', function () {
 // Images
 gulp.task('images', function () {
   return gulp.src('source/images/**/*')
+  .pipe($.imagemin({
+    progressive: true,
+    interlaced: true,
+    svgoPlugins: [{cleanupIDs: false}]
+  }))
     .pipe(gulp.dest('build/images'))
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("Image processing complete"));
