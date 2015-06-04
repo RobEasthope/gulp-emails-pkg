@@ -23,9 +23,14 @@ var minifyCss = require('gulp-minify-css');
 
 // HTML
 gulp.task('html', function () {
+  // Set HTML minification options
+  var minifyOptions = {
+    quotes:true
+  };
+
   return gulp.src('./source/html/build.html')
     .pipe($.premailer())
-    .pipe(minifyHTML())
+    .pipe(minifyHTML(minifyOptions))
     .pipe($.rename("index.html"))
     .pipe(gulp.dest('./build'))
     .pipe(browserSync.reload({stream:true}))
