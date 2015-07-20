@@ -15,14 +15,14 @@ var minifyHTML = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
 
 // Load project config file
-// var appConfig = require('./gulp-config.json');
+// var config = require('./config.json');
 
 
 // *
 
 
 // HTML
-gulp.task('html', function () {
+gulp.task('html', function (cb) {
   // Set HTML minification options
   var minifyOptions = {
     quotes:true
@@ -30,16 +30,18 @@ gulp.task('html', function () {
 
   return gulp.src('./source/html/build.html')
     .pipe($.premailer())
-    .pipe(minifyHTML(minifyOptions))
+    .pipe($.minifyHTML(minifyOptions))
     .pipe($.rename("index.html"))
     .pipe(gulp.dest('./build'))
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("HTML processing complete"));
+
+  cb();
 });
 
 
 // CSS
-gulp.task('css', function () {
+gulp.task('css', function (cb) {
   return gulp.src('source/scss/app.scss')
     .pipe($.sourcemaps.init())
     .pipe($.sass({
@@ -60,11 +62,13 @@ gulp.task('css', function () {
     .pipe(browserSync.reload({stream:true}))
 
     .pipe($.notify("CSS compile complete"));
+
+  cb();
 });
 
 
 // Images
-gulp.task('images', function () {
+gulp.task('images', function (cb) {
   return gulp.src('source/images/**/*')
   .pipe($.imagemin({
     progressive: true,
@@ -74,6 +78,8 @@ gulp.task('images', function () {
     .pipe(gulp.dest('build/images'))
     .pipe(browserSync.reload({stream:true}))
     .pipe($.notify("Image processing complete"));
+
+  cb();
 });
 
 
@@ -116,13 +122,14 @@ gulp.task('browser-sync', function (done) {
 // Watch task
 gulp.task('watch', function() {
   gulp.watch('source/html/**/*.*', gulp.series('html'));
-  gulp.watch('source/scss/**/*.*', gulp.series('css'));
+  gulp.watch('source/scss/**/*.*', gulp.series('css', 'html'));
   gulp.watch('source/images/**/*.*', gulp.series('images'));
 });
 
 
 // Localhost server & build
-gulp.task('dev', gulp.series('build', 'browser-sync', 'watch'), function () {
+
+gulp.task('serve', gulp.parallel('build', 'watch', 'browser-sync'), function () {
   
 });
 

@@ -1,4 +1,4 @@
 {
-	"DEVPATH": "./source/images",
+	"DEVPATH": "build/images",
 	"DEPLOYPATH": "###"
 }
