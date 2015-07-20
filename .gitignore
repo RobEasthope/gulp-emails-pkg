@@ -48,10 +48,9 @@ source/repos
 # Ignore Grunt dependencies and temp files
 /.sass-cache
 node_modules/
-source/gulp
 /build
 Gemfile.lock
-/source/css
+bower_components/
 
 # Ignore AWS S3 config file for security reasons
 aws.json
